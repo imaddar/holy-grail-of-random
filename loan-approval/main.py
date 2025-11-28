@@ -1,9 +1,11 @@
 # %% Imports
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import seaborn as sns
 import numpy as np
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
+from decision_tree import DecisionTree
 '''Preprocessing'''
 # %% One-hot encode categorical features
 df = pd.read_csv("./data/loan_approval.csv")
@@ -30,7 +32,9 @@ scaled_df = pd.DataFrame(
     index=df.index
 )
 df[numerical_features] = scaled_df
-df.head(1)
+X = df.drop("loan_status", axis=1)
+y = df["loan_status"]
+X_train, y_train, X_test, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # %%
 # Generate correlation matrix
@@ -40,3 +44,7 @@ sns.heatmap(correlation_matrix, annot=False, cmap='coolwarm', center=0)
 plt.title('Correlation Matrix')
 plt.tight_layout()
 plt.show()
+# %% here goes the decision tree logic
+
+tree = DecisionTree()
+tree.train(X_train, y_train)

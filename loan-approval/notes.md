@@ -17,3 +17,19 @@ CUST100008,29,Employed,5.9,28416,569,2.6,1334,22668,1,2,0,Credit Card,Education,
 Some notes on interesting facts about columns
 
 credit_score appears gaussian in nature, with a mean at ~643
+
+1. will try an initial implementation/train without dealing with multicollinearity
+  then compare this with dealing with multicollinearity (removing some features, PCA, etc)
+  
+next steps
+1. implement homemade decision tree
+2. compare it with a decision tree package
+3. build out appropriate evals
+  accuracy, precision, recall, etc.
+4. implement random forest by scratch
+5. compare with random forest package
+6. do some hyperparameter tuning
+7. try to implement XGBoost
+8. compare with baseline
+9. implement very basic neural network, afterwards check kaggle approach
+10. ++ see if I can make this production ready
