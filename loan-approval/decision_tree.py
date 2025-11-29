@@ -4,7 +4,7 @@ from tree_node import Node
 # DecisionTree should only take in numpy arrays
 class DecisionTree:
     
-    def __init__(self, min_samples_split=5_000, max_depth=10):
+    def __init__(self, min_samples_split=250, max_depth=20):
         self.tree = None
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
@@ -13,7 +13,7 @@ class DecisionTree:
     def predict(self, X):
         if not isinstance(X, np.ndarray):
             raise TypeError("X must be a NumPy array.")
-        return np.array([self.predict_one(x) for x in X])
+        return np.array([self.predict_one(x) for x in X], dtype=int)
         
     # handles building out the tree itself
     def fit(self, X, y):
@@ -29,8 +29,8 @@ class DecisionTree:
         
     def _build_tree(self, X, y, depth=0):
         # ----- OPTIONAL DEBUG PRINTS -----
-        indent = "  " * depth
-        print(f"{indent}[BUILD] depth={depth}, samples={len(y)}")
+        # indent = "  " * depth
+        # print(f"{indent}[BUILD] depth={depth}, samples={len(y)}")
     
         # 1. Stopping: max depth reached
         if self.max_depth is not None and depth >= self.max_depth:
@@ -85,7 +85,7 @@ class DecisionTree:
         H = (-probs * np.log2(probs)).sum()
         return H
         
-    def _best_split(self, X, y, n_quantiles=100):
+    def _best_split(self, X, y, n_quantiles=50):
         n_samples, n_features = X.shape
         parent_entropy = self._entropy(y)
     
@@ -102,7 +102,6 @@ class DecisionTree:
             # Sort once for this feature
             sorted_idx = np.argsort(col)
             sorted_col = col[sorted_idx]
-            sorted_y = y[sorted_idx]
     
             # Compute quantile thresholds
             # e.g. 50 evenly spaced thresholds between min and max
